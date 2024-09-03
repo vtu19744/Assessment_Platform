@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 15px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<h1>Assessment</h1>
+
+<form id="assessmentForm">
+    <div id="assessmentContainer">
+        <!-- Questions will be loaded here via JavaScript -->
+    </div>
+
+    <button type="submit">Submit Assessment</button>
+</form>
+
+<script>
+    const questions = [
+        
+            
+        
+        {
+            type: 'multiple-choice',
+            text: 'Which of the following is a programming language?',
+            options: ['HTML', 'CSS', 'Python', 'Photoshop']
+        }
+    ];
+
+    const assessmentContainer = document.getElementById('assessmentContainer');
+
+    questions.forEach((question, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+
+        const questionLabel = document.createElement('label');
+        questionLabel.textContent = question.text;
+        questionDiv.appendChild(questionLabel);
+
+        if (question.type === 'text') {
+            const answerInput = document.createElement('textarea');
+            answerInput.name = `answer${index}`;
+            questionDiv.appendChild(answerInput);
+        } else if (question.type === 'multiple-choice') {
+            question.options.forEach((option, optionIndex) => {
+                const optionLabel = document.createElement('label');
+                optionLabel.textContent = option;
+
+                const optionInput = document.createElement('input');
+                optionInput.type = 'radio';
+                optionInput.name = `answer${index}`;
+                optionInput.value = option;
+
+                questionDiv.appendChild(optionInput);
+                questionDiv.appendChild(optionLabel);
+            });
+        }
+
+        assessmentContainer.appendChild(questionDiv);
+    });
+
+    document.getElementById('assessmentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Assessment submitted!');
+    });
+</script>
+
+</body>
+</html>

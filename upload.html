@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Questions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], select, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 15px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<h1>Upload Questions</h1>
+
+<form id="uploadForm">
+    <div id="questionContainer">
+        <div class="question">
+            <label>Question Type</label>
+            <select name="questionType[]" required>
+                <option value="text">Text</option>
+                <option value="multiple-choice">Multiple Choice</option>
+            </select>
+            
+            <label>Question Text</label>
+            <textarea name="questionText[]" required></textarea>
+
+            <div class="optionsContainer" style="display: none;">
+                <label>Option A</label>
+                <input type="text" name="optionA[]" required>
+
+                <label>Option B</label>
+                <input type="text" name="optionB[]" required>
+
+                <label>Option C</label>
+                <input type="text" name="optionC[]" required>
+
+                <label>Option D</label>
+                <input type="text" name="optionD[]" required>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" onclick="addQuestion()">Add Another Question</button>
+    <button type="submit">Submit Questions</button>
+</form>
+
+<script>
+    document.querySelectorAll('select[name="questionType[]"]').forEach(function(select) {
+        select.addEventListener('change', function() {
+            const optionsContainer = this.parentElement.querySelector('.optionsContainer');
+            optionsContainer.style.display = this.value === 'multiple-choice' ? 'block' : 'none';
+        });
+    });
+
+    function addQuestion() {
+        const questionContainer = document.getElementById('questionContainer');
+        const newQuestion = questionContainer.children[0].cloneNode(true);
+        questionContainer.appendChild(newQuestion);
+
+        newQuestion.querySelectorAll('input').forEach(function(input) {
+            input.value = '';
+        });
+        newQuestion.querySelectorAll('textarea').forEach(function(textarea) {
+            textarea.value = '';
+        });
+        newQuestion.querySelector('select').addEventListener('change', function() {
+            const optionsContainer = this.parentElement.querySelector('.optionsContainer');
+            optionsContainer.style.display = this.value === 'multiple-choice' ? 'block' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission for demo purposes
+        window.location.href = 'assessment.html'; // Redirect to dashboard
+    });
+</script>
